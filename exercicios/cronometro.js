@@ -1,70 +1,43 @@
-/*
-let cronometro1 = {
-  hours: document.getElementById("hours"),
-  minutes: document.getElementById("minute"),
-  seconds: document.getElementById("second"),
+const cronometro = {
+  hours: "0",
+  minutes: "0",
+  seconds: "0",
 
-  tempo() {
-    for (let h = 0; h <= 2; h++) {
-      for (let o = 0; o <= 9; o++) {
-        for (let m = 0; m <= 5; m++) {
-          for (let i = 0; i <= 9; i++) {
-            for (let s = 0; s <= 5; s++) {
-              for (let e = 0; e <= 9; e++) {
-                this.hours.innerHTML = `${h}${o}`;
-                this.minutes.innerHTML = `${m}${i}`;
-                this.seconds.innerHTML = `${s}${e}`;
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-};
-
-setInterval(cronometro1.tempo(), 1000);
-*/
-
-let cronometro = {
-  hours: 0,
-  minutes: 0,
-  seconds: 0,
-
+  // função de acrecentar 2 'zeros'
   updateDisplay() {
-    //String(this.hours).padStart (2,'0) = faz que comece com 00
-    document.getElementById("hours").innerHTML = String(this.hours).padStart(
-      2,
-      "0"
-    );
-    document.getElementById("minute").innerHTML = String(this.minutes).padStart(
-      2,
-      "0"
-    );
-    document.getElementById("second").innerHTML = String(this.seconds).padStart(
-      2,
-      "0"
-    );
+    //this.hours.toString.padStart (2,'0) = faz que comece com 00
+
+    document.getElementById("hours").innerHTML = this.hours
+      .toString()
+      .padStart(2, "0");
+
+    document.getElementById("minute").innerHTML = this.minutes
+      .toString()
+      .padStart(2, "0");
+
+    document.getElementById("second").innerHTML = this.seconds
+      .toString()
+      .padStart(2, "0");
   },
 
   start() {
     this.intervalId = setInterval(() => {
       this.seconds++;
 
-      // Verifica se os segundos atingiram 60
+      // condiçao para verificar os seconds
       if (this.seconds === 60) {
         this.seconds = 0;
         this.minutes++;
       }
 
-      // Verifica se os minutos atingiram 60
+      // condiçao para verificar os minues
       if (this.minutes === 60) {
         this.minutes = 0;
         this.hours++;
       }
-      document.querySelector("p").style.color = "black";
 
-      // Atualiza a interface gráfica
+      document.querySelector("p").style.color = "black";
+      // atualizar o display
       this.updateDisplay();
     }, 1000);
   },
@@ -75,13 +48,12 @@ let cronometro = {
   },
 
   reset() {
+    // função de zera o timer do cronometro
+    (this.hours = 0),
+      (this.minutes = 0),
+      (this.seconds = 0),
+      this.updateDisplay();
+    this.stop();
     document.querySelector("p").style.color = "black";
-    this.hours = 0;
-    this.minutes = 0;
-    this.seconds = 0;
-    this.updateDisplay();
   },
 };
-
-// Inicia o cronômetro
-cronometro.start();
